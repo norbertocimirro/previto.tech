@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth bg-black">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previto.Tech | Engenharia de Gestão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-base: #000000;
+            --accent-cyan: #00E5FF;
+            --accent-blue: #0044FF;
+            --surface-1: rgba(255, 255, 255, 0.03);
+            --surface-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-base);
+            color: #EDEDED;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, .font-display { 
+            font-family: 'Space Grotesk', sans-serif; 
+        }
+
+        /* Ambient Aurora Backgrounds */
+        .aurora-bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 50% 30%, rgba(0, 229, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 70% 60%, rgba(0, 68, 255, 0.05) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+            animation: aurora-shift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes aurora-shift {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-5%) scale(1.05); }
+        }
+
+        /* Vercel/Linear Style Grid */
+        .tech-grid {
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Glass Nav */
+        .nav-blur {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        /* Silicon Valley Style Buttons */
+        .btn-primary {
+            background: #FFFFFF;
+            color: #000000;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 0 0 rgba(255,255,255,0.5);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--surface-border);
+            color: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Precision Cards (Bento) */
+        .precision-card {
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .precision-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 229, 255, 0.06), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .precision-card:hover::before { opacity: 1; }
+        .precision-card:hover {
+            border-color: rgba(0, 229, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Gradient Text */
+        .text-glow-cyan {
+            background: linear-gradient(to right, #FFFFFF, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-glow-silver {
+            background: linear-gradient(to bottom right, #FFFFFF 30%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Micro-tags */
+        .micro-tag {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        /* Smooth Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Logo Pulse */
+        .logo-core {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-cyan);
+            border-radius: 6px;
+            box-shadow: 0 0 20px var(--accent-cyan);
+        }
+        .logo-core::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 8px;
+            animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        @keyframes ping-slow {
+            75%, 100% { transform: scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="selection:bg-cyan-500/30 selection:text-white">
+
+    <div class="aurora-bg"></div>
+
+    <!-- Navegação Minimalista -->
+    <nav class="fixed w-full z-[100] nav-blur transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="logo-core flex items-center justify-center">
+                    <i data-lucide="zap" class="text-black w-3 h-3"></i>
+                </div>
+                <div class="text-lg font-display font-semibold tracking-tight text-white">
+                    PREVITO<span class="text-gray-500">.ENG</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#arquitetura" class="text-sm text-gray-400 hover:text-white transition-colors">Arquitetura</a>
+                <a href="#ecosystem" class="text-sm text-gray-400 hover:text-white transition-colors">Ecossistema</a>
+                <a href="#founder" class="text-sm text-gray-400 hover:text-white transition-colors">Operação</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#contato" class="hidden sm:inline-flex items-center justify-center h-8 px-4 text-xs font-medium bg-white text-black rounded-full hover:bg-gray-200 transition-colors">
+                    Iniciar Deploy
+                </a>
+                <button id="menu-toggle" class="md:hidden text-gray-400 hover:text-white"><i data-lucide="menu" class="w-5 h-5"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: The Pinnacle -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
+        <div class="tech-grid"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10 text-center flex flex-col items-center">
+            
+            <!-- Pill Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8 reveal backdrop-blur-md">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                </span>
+                <span class="micro-tag text-cyan-400">PREVITO.TECH • Sistema Operacional</span>
+            </div>
+
+            <!-- Massive Headline -->
+            <h1 class="text-6xl md:text-[6rem] lg:text-[8rem] font-display font-bold leading-[0.9] tracking-tighter mb-8 reveal">
+                <span class="text-glow-silver">O FIM DO</span><br>
+                <span class="text-glow-cyan">ACHISMO CLÍNICO.</span>
+            </h1>
+
+            <p class="max-w-2xl text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-10 reveal">
+                Sistemas gigantes são lentos. Nós desenvolvemos **Web Apps Satélites** de alta performance que estancam ineficiências na beira do leito, em tempo real.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 reveal">
+                <a href="#ecosystem" class="btn-primary h-12 px-8 rounded-full flex items-center justify-center gap-2 text-sm">
+                    Explorar Engenharia
+                </a>
+                <a href="#contato" class="btn-secondary h-12 px-8 rounded-full flex items-center justify-center gap-2 text-sm">
+                    Agendar Diagnóstico <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Métricas: O Código do Lucro -->
+    <section class="py-12 border-y border-white/5 bg-white/[0.01]">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-white/5">
+            <div class="text-center reveal">
+                <div class="text-3xl md:text-5xl font-display font-bold text-white mb-1">20<span class="text-cyan-400 text-2xl">d</span></div>
+                <div class="micro-tag">Ciclo de Deploy</div>
+            </div>
+            <div class="text-center reveal" style="transition-delay: 100ms;">
+                <div class="text-3xl md:text-5xl font-display font-bold text-white mb-1">0<span class="text-cyan-400 text-2xl">%</span></div>
+                <div class="micro-tag">Fricção de TI</div>
+            </div>
+            <div class="text-center reveal" style="transition-delay: 200ms;">
+                <div class="text-3xl md:text-5xl font-display font-bold text-white mb-1">100<span class="text-cyan-400 text-2xl">%</span></div>
+                <div class="micro-tag">Soberania Web</div>
+            </div>
+            <div class="text-center reveal" style="transition-delay: 300ms;">
+                <div class="text-3xl md:text-5xl font-display font-bold text-white mb-1">∞</div>
+                <div class="micro-tag">ROI Assistencial</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Ecossistema: Bento Box Elevado -->
+    <section id="ecosystem" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal">
+                <div class="micro-tag text-cyan-400 mb-4">// ARQUITETURA DE SOLUÇÕES</div>
+                <h2 class="text-4xl md:text-6xl font-display font-bold tracking-tight text-white mb-6">
+                    Módulos Cirúrgicos.
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl font-light">Aplicações desenhadas para resolver falhas que o seu ERP principal não consegue ver.</p>
+            </div>
+
+            <!-- Bento Grid 2.0 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[350px]">
+                
+                <!-- Card 1: Command Center (Span 2 cols on Desktop) -->
+                <div class="precision-card md:col-span-2 p-8 md:p-12 flex flex-col justify-between reveal group">
+                    <div class="relative z-10 max-w-lg">
+                        <i data-lucide="layout-dashboard" class="w-8 h-8 text-cyan-400 mb-6 opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                        <h3 class="text-2xl md:text-3xl font-display font-semibold mb-3">Painéis UPI / Command Centers</h3>
+                        <p class="text-gray-400 leading-relaxed text-sm md:text-base">Gestão visual de giro de leitos, escalas operacionais e ocupação. Digitalizamos o posto de enfermagem num único ecrã web fluido, sem instalações locais.</p>
+                    </div>
+                    <!-- Abstract UI Element -->
+                    <div class="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gradient-to-tl from-white/5 to-transparent rounded-tl-3xl border-l border-t border-white/10 translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500">
+                        <div class="absolute inset-4 border border-white/5 rounded-2xl flex flex-col gap-2 p-4">
+                            <div class="w-1/2 h-2 bg-white/10 rounded-full"></div>
+                            <div class="w-3/4 h-2 bg-white/10 rounded-full"></div>
+                            <div class="w-full h-8 bg-cyan-400/10 rounded-lg mt-auto border border-cyan-400/20"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: IoT -->
+                <div class="precision-card p-8 md:p-12 flex flex-col justify-between reveal group" style="transition-delay: 100ms;">
+                    <div class="relative z-10">
+                        <i data-lucide="cpu" class="w-8 h-8 text-cyan-400 mb-6 opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                        <h3 class="text-2xl font-display font-semibold mb-3">Previto S1 & IoT</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Sensores inteligentes (manta) integrados na nuvem. Prevenção ativa de Lesão por Pressão (LPP) com dados irrefutáveis.</p>
+                    </div>
+                    <div class="micro-tag text-cyan-400 mt-6">Hardware + Software</div>
+                </div>
+
+                <!-- Card 3: Sentinela LPP -->
+                <div class="precision-card p-8 md:p-12 flex flex-col justify-between reveal group" style="transition-delay: 200ms;">
+                    <div class="relative z-10">
+                        <i data-lucide="shield-alert" class="w-8 h-8 text-cyan-400 mb-6 opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                        <h3 class="text-2xl font-display font-semibold mb-3">Sentinela Vigilância</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Notificação ativa e auditoria de eventos adversos. Blindagem jurídica que protege o CNPJ e a assistência.</p>
+                    </div>
+                    <div class="micro-tag text-cyan-400 mt-6">Gestão de Risco</div>
+                </div>
+
+                <!-- Card 4: FisioHome (Span 2 cols on Desktop) -->
+                <div class="precision-card md:col-span-2 p-8 md:p-12 flex flex-col justify-between reveal group" style="transition-delay: 300ms;">
+                    <div class="relative z-10 max-w-lg">
+                        <i data-lucide="home" class="w-8 h-8 text-cyan-400 mb-6 opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                        <h3 class="text-2xl md:text-3xl font-display font-semibold mb-3">FisioHome Solutions</h3>
+                        <p class="text-gray-400 leading-relaxed text-sm md:text-base">Transpomos o controlo hospitalar para a casa do paciente. Gestão completa de equipas externas, evolução clínica mobile e faturação blindada.</p>
+                    </div>
+                    <!-- Abstract Map/Route Element -->
+                    <div class="absolute right-0 top-0 w-1/2 h-full opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity duration-500">
+                        <svg viewBox="0 0 100 100" class="w-full h-full stroke-cyan-400 stroke-[0.5]" fill="none">
+                            <path d="M10,90 Q30,50 50,50 T90,10" stroke-dasharray="2,2" class="animate-[dash_10s_linear_infinite]"/>
+                            <circle cx="90" cy="10" r="2" fill="currentColor"/>
+                            <circle cx="10" cy="90" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- O Arquiteto: O Dossier -->
+    <section id="founder" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="precision-card p-1 reveal">
+                <!-- Inner container to simulate the Vercel/Stripe sophisticated card -->
+                <div class="bg-[#020202] rounded-[19px] p-8 md:p-16 flex flex-col lg:flex-row gap-16 relative overflow-hidden">
+                    
+                    <div class="lg:w-2/3 relative z-10">
+                        <div class="micro-tag text-cyan-400 mb-6">// CHIEF ARCHITECT</div>
+                        <h2 class="text-4xl md:text-5xl font-display font-bold mb-6 tracking-tight">
+                            Código forjado <br> <span class="text-gray-500">sob pressão clínica.</span>
+                        </h2>
+                        <div class="space-y-6 text-gray-400 font-light text-base md:text-lg">
+                            <p>
+                                A vasta maioria das *software houses* não sabe o que é uma **Unidade de Pacientes Internos (UPI)**. Eles programam, nós operamos.
+                            </p>
+                            <p>
+                                Como Enfermeiro no **Hospital de Aeronáutica de Canoas (HACO)**, e Pós-graduado em **Gestão, Auditoria e Enfermagem Aeroespacial**, eu desenvolvo tecnologia militarmente precisa. Se o sistema não gera fluidez à beira do leito, ele é descartado.
+                            </p>
+                        </div>
+                        
+                        <!-- Badges Minimalistas -->
+                        <div class="flex flex-wrap gap-4 mt-10">
+                            <div class="flex items-center gap-2 border border-white/10 rounded-full px-4 py-1.5 bg-white/5">
+                                <div class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
+                                <span class="text-xs font-medium text-white">HACO / UPI</span>
+                            </div>
+                            <div class="flex items-center gap-2 border border-white/10 rounded-full px-4 py-1.5 bg-white/5">
+                                <div class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
+                                <span class="text-xs font-medium text-white">Auditoria</span>
+                            </div>
+                            <div class="flex items-center gap-2 border border-white/10 rounded-full px-4 py-1.5 bg-white/5">
+                                <div class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
+                                <span class="text-xs font-medium text-white">Aeroespacial</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/3 relative z-10 flex justify-center items-center">
+                        <!-- Abstract Tech Radar/Target -->
+                        <div class="relative w-64 h-64 flex items-center justify-center">
+                            <div class="absolute inset-0 border border-white/5 rounded-full animate-[spin_20s_linear_infinite]"></div>
+                            <div class="absolute inset-8 border border-dashed border-cyan-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                            <div class="absolute inset-16 border border-white/10 rounded-full"></div>
+                            <div class="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center backdrop-blur-md">
+                                <i data-lucide="binary" class="text-cyan-400 w-6 h-6"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action: The Terminal -->
+    <section id="contato" class="py-40 px-6 text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10 reveal">
+            <h2 class="text-5xl md:text-7xl font-display font-bold mb-6 tracking-tighter">
+                Pronto para o <span class="text-glow-cyan">Deploy?</span>
+            </h2>
+            <p class="text-xl text-gray-400 mb-12 font-light">
+                Agende uma consultoria direta. Diagnosticamos o gargalo e implementamos o Web App na sua unidade em tempo recorde.
+            </p>
+            <div class="flex justify-center">
+                <a href="https://wa.me/5551999999999" class="btn-primary h-14 px-10 rounded-full flex items-center justify-center gap-3 text-base">
+                    Iniciar Convergência
+                    <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Ultraminimalista -->
+    <footer class="py-10 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-4 h-4 bg-cyan-400 rounded-sm"></div>
+                <div class="text-sm font-display font-bold tracking-tight text-white">
+                    PREVITO.TECH
+                </div>
+            </div>
+            
+            <div class="text-center md:text-left">
+                <p class="micro-tag">Canoas, RS • © 2024. All Systems Go.</p>
+            </div>
+
+            <div class="flex gap-6">
+                <a href="#" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                <a href="https://instagram.com/previto.tech" target="_blank" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Efeito de Rasto de Rato nos Cartões (Glow hover effect)
+        document.getElementById("ecosystem").onmousemove = e => {
+            for(const card of document.getElementsByClassName("precision-card")) {
+                const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        };
+
+        // Scroll Reveal Suave (Efeito Mola)
+        const observerOptions = { 
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Menu Mobile Simples
+        const menuBtn = document.getElementById('menu-toggle');
+        const nav = document.querySelector('nav');
+        menuBtn.addEventListener('click', () => {
+            const links = nav.querySelector('.hidden.md\\:flex');
+            const cta = nav.querySelector('.hidden.sm\\:inline-flex');
+            
+            if(links) {
+                links.classList.toggle('hidden');
+                links.classList.toggle('flex');
+                links.classList.toggle('flex-col');
+                links.classList.toggle('absolute');
+                links.classList.toggle('top-16');
+                links.classList.toggle('left-0');
+                links.classList.toggle('w-full');
+                links.classList.toggle('bg-black');
+                links.classList.toggle('p-6');
+                links.classList.toggle('border-b');
+                links.classList.toggle('border-white/10');
+            }
+            if(cta) {
+                cta.classList.toggle('hidden');
+                cta.classList.toggle('flex');
+                cta.classList.toggle('mt-4');
+            }
+        });
+    </script>
+</body>
+</html>
