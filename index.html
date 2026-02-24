@@ -153,27 +153,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Custom Logo Pulse */
-        .logo-core {
-            position: relative;
-            width: 24px;
-            height: 24px;
-            background: var(--accent-cyan);
-            border-radius: 6px;
-            box-shadow: 0 0 20px var(--accent-cyan);
-        }
-        .logo-core::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border: 1px solid var(--accent-cyan);
-            border-radius: 8px;
-            animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-        @keyframes ping-slow {
-            75%, 100% { transform: scale(1.5); opacity: 0; }
-        }
     </style>
 </head>
 <body class="selection:bg-cyan-500/30 selection:text-white">
@@ -183,11 +162,14 @@
     <!-- Navegação Minimalista -->
     <nav class="fixed w-full z-[100] nav-blur transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+            
+            <!-- LOGO AQUI -->
             <div class="flex items-center gap-3">
-                <div class="logo-core flex items-center justify-center">
-                    <i data-lucide="zap" class="text-black w-3 h-3"></i>
-                </div>
-                <div class="text-lg font-display font-semibold tracking-tight text-white">
+                <img src="./logo.png" alt="Previto Logo" class="h-8 w-auto object-contain">
+                
+                <!-- Mantive o texto ao lado da logo caso sua imagem seja apenas o escudo. 
+                     Se a sua imagem já tiver a palavra PREVITO escrita, você pode deletar a div abaixo. -->
+                <div class="text-lg font-display font-semibold tracking-tight text-white hidden sm:block">
                     PREVITO<span class="text-gray-500">.TECH</span>
                 </div>
             </div>
@@ -402,7 +384,7 @@
                 Agende uma consultoria direta. Diagnosticamos o problema e implementamos o Sistema na sua unidade em tempo recorde.
             </p>
             <div class="flex justify-center">
-                <a href="https://wa.me/+5553981145097" class="btn-primary h-14 px-10 rounded-full flex items-center justify-center gap-3 text-base">
+                <a href="https://wa.me/5551999999999" class="btn-primary h-14 px-10 rounded-full flex items-center justify-center gap-3 text-base">
                     Iniciar Conversa
                     <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
                 </a>
@@ -413,8 +395,10 @@
     <!-- Footer Ultraminimalista -->
     <footer class="py-10 px-6 border-t border-white/5">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            
+            <!-- LOGO DO FOOTER AQUI -->
             <div class="flex items-center gap-2">
-                <div class="w-4 h-4 bg-cyan-400 rounded-sm"></div>
+                <img src="./logo.png" alt="Previto Logo" class="h-5 w-auto object-contain opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
                 <div class="text-sm font-display font-bold tracking-tight text-white">
                     PREVITO.TECH
                 </div>
